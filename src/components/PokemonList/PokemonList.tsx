@@ -2,18 +2,14 @@ import React from 'react';
 import styles from './PokemonList.module.scss';
 import PokemonListing from '../PokemonListing';
 
-import { PokemonListingShape } from '../../global/types';
+import { PropShape } from '../../global/types';
 
-const PokemonList = ({
-  pokemonListData,
-}: {
-  pokemonListData: PokemonListingShape[];
-}) => {
+const PokemonList = ({ pokemonListData }: { pokemonListData: PropShape[] }) => {
   return (
     <ul className={styles.pokemonList}>
       {pokemonListData.length > 0 &&
         pokemonListData.map((pokemon) => (
-          <PokemonListing key={pokemon.name} {...pokemon} />
+          <PokemonListing key={pokemon.url} {...pokemon} />
         ))}
     </ul>
   );

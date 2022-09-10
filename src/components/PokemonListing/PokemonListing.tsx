@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './PokemonListing.module.scss';
 
-import { PokemonListingShape } from '../../global/types';
+import { PropShape } from '../../global/types';
 
-const PokemonListing = ({ name, url }: PokemonListingShape) => {
+const PokemonListing = ({ name, url }: PropShape) => {
   const pokemonId = url.split('/').at(-2);
 
   return (

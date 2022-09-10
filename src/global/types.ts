@@ -1,4 +1,4 @@
-export interface PokemonListingShape {
+export interface PropShape {
   name: string;
   url: string;
 }
@@ -16,39 +16,29 @@ interface Sprite {
 
 interface SpriteAll extends Sprite {
   other: {
-    dream_world: Sprite;
-    home: Sprite;
+    dream_world?: Sprite;
+    home?: Sprite;
     'official-artwork': Sprite;
   }
 }
 
 export interface PokemonDetailShape {
   abilities: {
-    ability: {
-      name: string;
-      url: string;
-    };
+    ability: PropShape;
     is_hidden: boolean;
     slot: number;
   }[];
   height: number;
-  id: number;
+  id: number | string;
   name: string;
   sprites: SpriteAll;
   stats: {
     base_stat: number;
-    effort: number;
-    stat: {
-      name: string;
-      url: string;
-    }
+    stat: PropShape;
   }[];
   types: {
     slot: number;
-    type: {
-      name: string;
-      url: string;
-    }
+    type: PropShape;
   }[];
   weight: number;
 }

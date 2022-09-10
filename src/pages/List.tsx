@@ -1,19 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getPokemonList } from '../services/pokemonList';
 import PokemonList from '../components/PokemonList';
 
-import { PokemonListingShape } from '../global/types';
+import { PokemonDetailShape, PropShape } from '../global/types';
+
 const List = () => {
   const { page = '1' } = useParams<{ page?: string }>();
-  const [pokemonListData, setPokemonListData] = useState<PokemonListingShape[]>(
+  const [pokemonListData, setPokemonListData] = useState<PropShape[]>([]);
+  const [createdPokemon] = useLocalStorage<PokemonDetailShape[]>(
+    'createdPokemon',
     [],
   );
   const [count, setCount] = useState(0);
-  const [pokemonPrevious, setPokemonPrevious] = useState('');
   const [pokemonNext, setPokemonNext] = useState('');
   const parsedPage = parseInt(page);
   const isValidPage = !isNaN(parsedPage);
+
+  const getPageData = ({
+    count,
+    createdPokemon = [],
+    pokemonListData = [],
+    limit = 20,
+    pokemonNext,
+    page,
+  }: {
+    count: number;
+    createdPokemon: PokemonDetailShape[];
+    pokemonListData: PropShape[];
+    limit?: number;
+    pokemonNext: string;
+    page: number;
+  }) => {
+    const { length: createdPokemonCount = 0 } = createdPokemon;
+    const { length: pokemonListDataCount = 0 } = pokemonListData;
+
+    if (createdPokemonCount === 0 || pokemonListDataCount === limit) {
+      return { results: pokemonListData, hasNext: pokemonNext };
+    }
+
+    const pageStartCount = (page - 1) * limit;
+    const createdPokemonOffset =
+      pokemonListDataCount > 0 ? 0 : pageStartCount - count;
+    const sliceCount = limit - pokemonListDataCount;
+
+    const results = [
+      ...pokemonListData,
+      ...createdPokemon
+        .slice(createdPokemonOffset, sliceCount)
+        .map(({ name, id }) => {
+          return {
+            name,
+            url: `${id}/`,
+          };
+        }),
+    ];
+    return {
+      results,
+      hasNext:
+        pokemonNext || createdPokemonOffset + sliceCount < createdPokemonCount,
+    };
+  };
 
   useEffect(() => {
     if (!isValidPage) {
@@ -22,44 +70,49 @@ const List = () => {
     getPokemonList({ currentPage: parsedPage }).then(
       ({
         count,
-        previous,
         next,
         results,
       }: {
         count: number;
-        previous: string;
         next: string;
-        results: PokemonListingShape[];
+        results: PropShape[];
       }) => {
         setPokemonListData(results);
         setCount(count);
-        setPokemonPrevious(previous);
         setPokemonNext(next);
       },
     );
   }, [page]);
+  const { results, hasNext } = getPageData({
+    count,
+    createdPokemon,
+    pokemonListData,
+    pokemonNext,
+    page: parsedPage,
+  });
 
-  const hasResults = pokemonListData.length > 0;
+  const hasResults = results.length > 0;
 
   return (
     <>
       {isValidPage && hasResults && (
         <>
-          <PokemonList pokemonListData={pokemonListData} />
+          <PokemonList pokemonListData={results} />
           <div>
-            {pokemonPrevious && (
+            {parsedPage > 1 && (
               <Link to={`/list/${parsedPage - 1}`}>Previous</Link>
             )}
             &nbsp;
-            {pokemonNext && <Link to={`/list/${parsedPage + 1}`}>Next</Link>}
+            {hasNext && <Link to={`/list/${parsedPage + 1}`}>Next</Link>}
           </div>
         </>
       )}
-      {!hasResults && (
+      {/* TODO: Fix this flashing content */}
+      {/* {!hasResults && (
         <>
           End of results. <Link to='/'>Return home?</Link>
         </>
-      )}
+      )} */}
       {!isValidPage && (
         <>
           Invalid request. <Link to='/'>Return home?</Link>

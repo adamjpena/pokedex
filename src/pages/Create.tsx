@@ -62,7 +62,6 @@ const Create = () => {
     const newPokemon = {
       abilities: [...normalAbilities, ...hiddenAbilities],
       height: parseInt(height),
-      // TODO generate this based on current number of created pokemon
       id,
       name,
       sprites: {

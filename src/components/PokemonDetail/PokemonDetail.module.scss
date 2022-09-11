@@ -4,6 +4,10 @@
 
 .topSection {
   background-color: #5ac2c5;
+  background-image: url('../../assets/images/pokeball-icon.png');
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 40%;
   border-radius: 50px 50px 0 0;
   padding: 25px 25px 0 25px;
 }
@@ -71,5 +75,13 @@
 .photo {
   display: block;
   margin: 0 auto -12.5%;
+  // prevent layout shift for invalid/missing images
+  min-height: calc(66.67vw - 34px);
+  position: relative;
   width: 66.67%;
+
+  // prevent layout shift for invalid/missing images
+  @media (min-width: 540px) {
+    min-height: 326.68px;
+  }
 }

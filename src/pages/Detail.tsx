@@ -15,7 +15,7 @@ const Detail = () => {
     PokemonDetailShape[]
   >('createdPokemon', []);
   const [isErrorRequest, setIsErrorRequest] = useState(false);
-  const [isPokemonFetched, setIsPokemonFetched] = useState(false);
+  const [isPokemonFetchDone, setIsPokemonFetchDone] = useState(false);
   const { id } = useParams<{ id?: string }>();
   const isCreated = id?.split('-')[0] === 'created';
   const parsedId = id && parseInt(id);
@@ -36,11 +36,16 @@ const Detail = () => {
     getPokemonDetail({ id: parsedId })
       .then((response: PokemonDetailShape) => {
         setIsErrorRequest(false);
-        setIsPokemonFetched(true);
+        setIsPokemonFetchDone(true);
         setPokemonDetailData(response);
       })
       .catch((error) => {
-        setIsErrorRequest(true);
+        const errorString = `${error}`;
+        if (errorString.includes('Not Found')) {
+          setIsPokemonFetchDone(true);
+        } else {
+          setIsErrorRequest(true);
+        }
         throw error;
       });
   }, [createdPokemon, id, isCreated, isValidId, parsedId]);
@@ -56,15 +61,19 @@ const Detail = () => {
     return <>There was an error fetching Pokemon data. Please try again.</>;
   }
 
+  const isInvalidPokemon =
+    !pokemonDetailData &&
+    (isPokemonFetchDone || isCreated || (!isValidId && !isCreated));
+
   return (
     <main>
       {pokemonDetailData && <PokemonDetail {...pokemonDetailData} />}
-      {isPokemonFetched && !pokemonDetailData && (
+      {isInvalidPokemon && (
         <>
           {id} is an invalid pokemon id. <Link to='/'>Return home?</Link>
         </>
       )}
-      {isCreated && (
+      {pokemonDetailData && isCreated && (
         <button onClick={deletePokemon}>Delete this pokemon</button>
       )}
     </main>

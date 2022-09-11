@@ -29,7 +29,7 @@ export const mockPokemonDetailData = () => {
       },
     ],
     height: chance.integer(),
-    id: chance.integer().toString(),
+    id: `${chance.integer().toString()}`,
     name: chance.word(),
     sprites: {
       front_default: 'https://via.placeholder.com/50x50',
@@ -96,3 +96,12 @@ export const mockPokemonDetailData = () => {
     weight: chance.integer(),
   };
 };
+
+export const mockPokemonListData = () => {
+  return Array(20).map((x, i) => {
+    return {
+      name: chance.word(),
+      url: 'https://pokeapi.co/api/v2/pokemon/${i}/'
+    }
+  });
+}

@@ -6,7 +6,7 @@ import { PropShape } from '../../global/types';
 
 const PokemonList = ({ pokemonListData }: { pokemonListData: PropShape[] }) => {
   return (
-    <ul className={styles.pokemonList}>
+    <ul data-testid='pokemon-list' className={styles.pokemonList}>
       {pokemonListData.length > 0 &&
         pokemonListData.map((pokemon) => (
           <PokemonListing key={pokemon.url} {...pokemon} />

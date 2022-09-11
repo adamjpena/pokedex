@@ -107,12 +107,6 @@ const List = () => {
           </div>
         </>
       )}
-      {/* TODO: Fix this flashing content */}
-      {/* {!hasResults && (
-        <>
-          End of results. <Link to='/'>Return home?</Link>
-        </>
-      )} */}
       {!isValidPage && (
         <>
           Invalid request. <Link to='/'>Return home?</Link>

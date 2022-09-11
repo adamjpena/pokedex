@@ -14,7 +14,7 @@ const PokemonDetail = ({
   weight,
 }: PokemonDetailShape) => {
   return (
-    <div className={styles.pokemonDetail}>
+    <div data-testid='pokemon-detail' className={styles.pokemonDetail}>
       <h1>
         {name} #{id}
       </h1>

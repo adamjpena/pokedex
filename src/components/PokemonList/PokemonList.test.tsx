@@ -3,9 +3,9 @@ import PokemonList from '.';
 import { render, mockPokemonListData } from '../../test/utils';
 
 test('renders pokemon list', () => {
-  const { getByTestId } = render(
+  const { getByTestId, queryAllByTestId } = render(
     <PokemonList pokemonListData={mockPokemonListData()} />,
   );
-  const linkElement = getByTestId('pokemon-list');
-  expect(linkElement).toBeInTheDocument();
+  expect(getByTestId('pokemon-list')).toBeInTheDocument();
+  expect(queryAllByTestId('pokemon-list-item').length).toEqual(20);
 });

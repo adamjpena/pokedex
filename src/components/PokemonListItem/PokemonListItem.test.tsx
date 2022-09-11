@@ -6,6 +6,5 @@ test('renders pokemon list item', () => {
   const { getByTestId } = render(
     <PokemonListItem {...mockPokemonListItem()} />,
   );
-  const linkElement = getByTestId('pokemon-list-item');
-  expect(linkElement).toBeInTheDocument();
+  expect(getByTestId('pokemon-list-item')).toBeInTheDocument();
 });

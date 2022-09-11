@@ -16,7 +16,7 @@ const PokemonDetail = ({
   return (
     <div data-testid='pokemon-detail' className={styles.pokemonDetail}>
       <h1>
-        {name} #{id}
+        {name} #<span data-testid='id'>{id}</span>
       </h1>
       <img
         src={sprites.other['official-artwork'].front_default}

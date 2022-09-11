@@ -118,7 +118,7 @@ export const mockPokemonListItem = (i = chance.integer()) => {
 }
 
 export const mockPokemonListData = () => {
-  return Array(20).map((x, i) => {
+  return Array(20).fill({}).map((x, i) => {
     return mockPokemonListItem(i);
   });
 }

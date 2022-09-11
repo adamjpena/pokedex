@@ -1,6 +1,18 @@
-# Getting Started with Create React App
+# Pokedex clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A pokedex, created by Professor Oak, is a device that serves as compendium of all pokemon. This app is a clone of the pokedex which consumes the [Pokeapi](https://pokeapi.co/) to make a paginated list of pokemons, with a detail pages and an "Create pokemon" feature.
+
+## Create pokemon
+
+On the "/create" page, a user can fill in abbreviated Pokemon information and create their very own Pokemon! I used [React Hook Form](https://github.com/react-hook-form/react-hook-form) to handle validations and submission. In order to keep a user's Pokemon isolated to their own Pokedex without maintaining a database, a successful submission is stored to the browser's Local Storage.
+
+All created pokemon have an id starting with 'created-' to differentiate them. This list of custom pokemon is seamlessly blended with the Pokeapi's list on the overview page and is accessed on the detail page whenever a pokemon id starts with 'created-'.
+
+## Considerations
+
+This app is dependent on Pokeapi calls on every page. While these calls are very quick, this can be improved by statically generating these pages. [Gatsby](https://github.com/gatsbyjs/gatsby) would be a great candidate for this.
+
+Functionality was the primary goal of this app but the styling for this app could use some better standards and TLC. Ideally, I'd like to build out a grid system and consistent theme. The Pokemon detail page is a first pass at a concept for how the rest of the app could look.
 
 ## Available Scripts
 

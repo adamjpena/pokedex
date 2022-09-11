@@ -1,10 +1,10 @@
 # Pokedex clone
 
-A pokedex, created by Professor Oak, is a device that serves as compendium of all pokemon. This app is a clone of the pokedex which consumes the [Pokeapi](https://pokeapi.co/) to make a paginated list of pokemons, with a detail pages and an "Create pokemon" feature.
+A pokedex, created by Professor Oak, is a device that serves as compendium of all pokemon. This app is a clone of the pokedex which consumes the [Pokeapi](https://pokeapi.co/) to make a [paginated list of pokemons](https://adamjpena.github.io/pokedex/#/), with [detail pages](https://adamjpena.github.io/pokedex/#/detail/28) and an ["Create pokemon" feature](https://adamjpena.github.io/pokedex/#/create).
 
 ## Create pokemon
 
-On the "/create" page, a user can fill in abbreviated Pokemon information and create their very own Pokemon! I used [React Hook Form](https://github.com/react-hook-form/react-hook-form) to handle validations and submission. In order to keep a user's Pokemon isolated to their own Pokedex without maintaining a database, a successful submission is stored to the browser's Local Storage.
+[On the /create page](https://adamjpena.github.io/pokedex/#/create), a user can fill in abbreviated Pokemon information and create their very own Pokemon! I used [React Hook Form](https://github.com/react-hook-form/react-hook-form) to handle validations and submission. In order to keep a user's Pokemon isolated to their own Pokedex without maintaining a database, a successful submission is stored to the browser's Local Storage.
 
 All created pokemon have an id starting with 'created-' to differentiate them. This list of custom pokemon is seamlessly blended with the Pokeapi's list on the overview page and is accessed on the detail page whenever a pokemon id starts with 'created-'.
 

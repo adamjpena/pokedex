@@ -1,6 +1,19 @@
+import React from 'react';
+import userEvent from '@testing-library/user-event';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { render as rtlRender } from '@testing-library/react';
 import Chance from 'chance';
 
 const chance = new Chance();
+
+export const render = (ui: React.ReactElement, {route = '/'} = {}) => {
+  window.history.pushState({}, 'Test page', route)
+
+  return {
+    user: userEvent.setup(),
+    ...rtlRender(ui, {wrapper: Router}),
+  }
+}
 
 const mockProp = () => {
   return {
@@ -97,11 +110,15 @@ export const mockPokemonDetailData = () => {
   };
 };
 
+export const mockPokemonListItem = (i = chance.integer()) => {
+  return {
+    name: chance.word(),
+    url: `https://pokeapi.co/api/v2/pokemon/${i}/`,
+  }
+}
+
 export const mockPokemonListData = () => {
   return Array(20).map((x, i) => {
-    return {
-      name: chance.word(),
-      url: 'https://pokeapi.co/api/v2/pokemon/${i}/'
-    }
+    return mockPokemonListItem(i);
   });
 }

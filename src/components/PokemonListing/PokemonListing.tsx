@@ -8,7 +8,7 @@ const PokemonListing = ({ name, url }: PropShape) => {
   const pokemonId = url.split('/').at(-2);
 
   return (
-    <li className={styles.pokemonList}>
+    <li data-testid='pokemon-list-item' className={styles.pokemonList}>
       <Link to={`/detail/${pokemonId}`}>
         {pokemonId}: {name}
       </Link>

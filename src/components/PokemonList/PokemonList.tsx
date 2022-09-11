@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './PokemonList.module.scss';
-import PokemonListing from '../PokemonListing';
+import PokemonListItem from '../PokemonListItem';
 
 import { PropShape } from '../../global/types';
 
@@ -9,7 +9,7 @@ const PokemonList = ({ pokemonListData }: { pokemonListData: PropShape[] }) => {
     <ul data-testid='pokemon-list' className={styles.pokemonList}>
       {pokemonListData.length > 0 &&
         pokemonListData.map((pokemon) => (
-          <PokemonListing key={pokemon.url} {...pokemon} />
+          <PokemonListItem key={pokemon.url} {...pokemon} />
         ))}
     </ul>
   );

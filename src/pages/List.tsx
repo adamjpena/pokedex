@@ -50,6 +50,12 @@ const List = () => {
 
   const hasResults = results.length > 0;
 
+  const roundUpNearestN = (num: number, n: number) => {
+    return Math.ceil(num / n) * n;
+  };
+
+  const pageTotal = roundUpNearestN(count + createdPokemon.length, 20) / 20;
+
   return (
     <main data-testid='list-page'>
       {count > 0 && isValidPage && hasResults && (
@@ -57,8 +63,9 @@ const List = () => {
           <h1>Pokedex</h1>
           <PokemonList pokemonListData={results} />
           <Pagination
-            previous={parsedPage > 1 ? `/list/${parsedPage - 1}` : undefined}
-            next={hasNext ? `/list/${parsedPage + 1}` : undefined}
+            currentPage={parsedPage}
+            relativePath='/list/'
+            pageTotal={pageTotal}
           />
         </>
       )}

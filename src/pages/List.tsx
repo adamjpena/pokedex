@@ -82,7 +82,7 @@ const List = () => {
         setPokemonNext(next);
       },
     );
-  }, [page]);
+  }, [isValidPage, page, parsedPage]);
   const { results, hasNext } = getPageData({
     count,
     createdPokemon,
@@ -94,7 +94,7 @@ const List = () => {
   const hasResults = results.length > 0;
 
   return (
-    <>
+    <main data-testid='list-page'>
       {isValidPage && hasResults && (
         <>
           <PokemonList pokemonListData={results} />
@@ -118,7 +118,7 @@ const List = () => {
           Invalid request. <Link to='/'>Return home?</Link>
         </>
       )}
-    </>
+    </main>
   );
 };
 

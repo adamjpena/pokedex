@@ -41,7 +41,7 @@ const Detail = () => {
         setIsErrorRequest(true);
         throw error;
       });
-  }, []);
+  }, [createdPokemon, id, isCreated, isValidId, parsedId]);
 
   const deletePokemon = () => {
     setCreatedPokemon(
@@ -55,7 +55,7 @@ const Detail = () => {
   }
 
   return (
-    <>
+    <main>
       {pokemonDetailData && <PokemonDetail {...pokemonDetailData} />}
       {!pokemonDetailData && (
         <>
@@ -65,7 +65,7 @@ const Detail = () => {
       {isCreated && (
         <button onClick={deletePokemon}>Delete this pokemon</button>
       )}
-    </>
+    </main>
   );
 };
 

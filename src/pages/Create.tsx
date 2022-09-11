@@ -173,7 +173,7 @@ const Create = () => {
   }
 
   return (
-    <>
+    <main>
       <h1>Create a Pokemon</h1>
       <form
         onSubmit={handleSubmit((data) => {
@@ -273,7 +273,7 @@ const Create = () => {
         />
         <button type='submit'>Create</button>
       </form>
-    </>
+    </main>
   );
 };
 

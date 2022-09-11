@@ -14,6 +14,7 @@ describe('getPokemonResults', () => {
     const pokemonResults = getPokemonResults({
       count: 25,
       createdPokemon,
+      limit: 20,
       pokemonListData,
       page: 1,
     });
@@ -30,6 +31,7 @@ describe('getPokemonResults', () => {
     expect(getPokemonResults({
       count: 25,
       createdPokemon,
+      limit: 20,
       pokemonListData,
       page: 2,
     })).toEqual([...pokemonListData, ...createdPokemonOverviewList]);
@@ -44,6 +46,7 @@ describe('getPokemonResults', () => {
     expect(getPokemonResults({
       count: 25,
       createdPokemon,
+      limit: 20,
       pokemonListData: [],
       page: 3,
     })).toEqual(createdPokemonOverviewList);
@@ -58,6 +61,7 @@ describe('getPokemonResults', () => {
     expect(getPokemonResults({
       count: 25,
       createdPokemon,
+      limit: 20,
       pokemonListData: [],
       page: 4,
     })).toEqual(createdPokemonOverviewList);

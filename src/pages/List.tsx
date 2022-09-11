@@ -9,6 +9,7 @@ import { getPokemonResults, roundUpNearestN } from '../helpers';
 import { PokemonDetailShape, PropShape } from '../global/types';
 
 const List = () => {
+  const limit = 20;
   const { page = '1' } = useParams<{ page?: string }>();
   const [pokemonListData, setPokemonListData] = useState<PropShape[]>([]);
   const [createdPokemon] = useLocalStorage<PokemonDetailShape[]>(
@@ -23,7 +24,7 @@ const List = () => {
     if (!isValidPage) {
       return;
     }
-    getPokemonList({ currentPage: parsedPage }).then(
+    getPokemonList({ currentPage: parsedPage, limit }).then(
       ({
         count,
         next,
@@ -41,13 +42,15 @@ const List = () => {
   const results = getPokemonResults({
     count,
     createdPokemon,
+    limit,
     pokemonListData,
     page: parsedPage,
   });
 
   const hasResults = results.length > 0;
 
-  const pageTotal = roundUpNearestN(count + createdPokemon.length, 20) / 20;
+  const pageTotal =
+    roundUpNearestN(count + createdPokemon.length, limit) / limit;
 
   return (
     <main data-testid='list-page'>

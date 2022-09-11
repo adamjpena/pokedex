@@ -23,13 +23,13 @@ export const getPokemonResults = ({
   count,
   createdPokemon = [],
   pokemonListData = [],
-  limit = 20,
+  limit,
   page,
 }: {
   count: number;
   createdPokemon: PokemonDetailShape[];
   pokemonListData: PropShape[];
-  limit?: number;
+  limit: number;
   page: number;
 }) => {
   const { length: createdPokemonCount = 0 } = createdPokemon;

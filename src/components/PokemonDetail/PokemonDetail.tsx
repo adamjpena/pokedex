@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './PokemonDetail.module.scss';
+import cx from 'classnames';
 
 import { PokemonDetailShape } from '../../global/types';
+import { toTitleCase } from '../../helpers';
 
 const PokemonDetail = ({
   abilities,
@@ -15,57 +17,86 @@ const PokemonDetail = ({
 }: PokemonDetailShape) => {
   return (
     <div data-testid='pokemon-detail' className={styles.pokemonDetail}>
-      <h1>
-        {name} #<span data-testid='id'>{id}</span>
-      </h1>
-      <img
-        src={sprites.other['official-artwork'].front_default}
-        alt={`${name} front`}
-      />
-      <table>
-        <tbody>
-          <tr>
-            <td>Types:</td>
-            <td>
-              <ul>
-                {types.map(({ type, slot }) => (
-                  <li key={slot}>{type.name}</li>
+      <section className={styles.topSection}>
+        <h1 className={styles.title}>
+          {toTitleCase(name)} #<span data-testid='id'>{id}</span>
+        </h1>
+        <ul className={styles.types}>
+          {types.map(({ type, slot }) => (
+            <li key={slot} className={styles.type}>
+              {toTitleCase(type.name)}
+            </li>
+          ))}
+        </ul>
+        <img
+          src={
+            sprites.other['official-artwork'].front_default ||
+            'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D'
+          }
+          alt={`${name} front`}
+          className={styles.photo}
+          width='327'
+          height='auto'
+        />
+      </section>
+      <section className={styles.infoSection}>
+        <table className={styles.infoTable}>
+          <tbody>
+            <tr>
+              <td>Abilities:</td>
+              <td>
+                {abilities.map(({ ability, slot }, i) => (
+                  <React.Fragment key={slot}>
+                    {toTitleCase(ability.name)}
+                    {i !== abilities.length - 1 && ', '}
+                  </React.Fragment>
                 ))}
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <td>Abilities:</td>
-            <td>
-              <ul>
-                {abilities.map(({ ability, slot }) => (
-                  <li key={slot}>{ability.name}</li>
-                ))}
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <td>Stats:</td>
-            <td>
-              <ul>
-                {stats.map(({ base_stat, stat }) => (
-                  <li key={stat.name}>
-                    {stat.name}: {base_stat}
-                  </li>
-                ))}
-              </ul>
-            </td>
-          </tr>
-          <tr>
-            <td>Height:</td>
-            <td>{height}</td>
-          </tr>
-          <tr>
-            <td>Weight:</td>
-            <td>{weight}</td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+            <tr>
+              <td>Stats:</td>
+              <td>
+                <table className={styles.statsTable}>
+                  <tbody>
+                    {stats.map(({ base_stat, stat }) => {
+                      const statRating = Math.min((100 * base_stat) / 160, 100);
+                      return (
+                        <tr key={stat.name}>
+                          <td className={styles.statsTableKey}>
+                            {toTitleCase(stat.name)}
+                          </td>
+                          <td className={styles.statsTableValue}>
+                            {base_stat}
+                          </td>
+                          <td>
+                            <div
+                              style={{
+                                width: `${statRating}%`,
+                              }}
+                              className={cx(styles.statsBar, {
+                                [styles.statsBarBad]: statRating < 30,
+                                [styles.statsBarGood]: statRating > 50,
+                              })}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>Height:</td>
+              <td>{height}</td>
+            </tr>
+            <tr>
+              <td>Weight:</td>
+              <td>{weight}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 };

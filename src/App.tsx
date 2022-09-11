@@ -1,22 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import List from './pages/List';
 import Detail from './pages/Detail';
 import Create from './pages/Create';
+import Header from './components/Header';
 
 const App = () => {
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-          <li>
-            <Link to='/create'>Create</Link>
-          </li>
-        </ul>
-        <hr />
+      <>
+        <Header />
         <Routes>
           <Route path='/' element={<List />} />
           <Route path='/list' element={<List />} />
@@ -24,7 +17,7 @@ const App = () => {
           <Route path='/detail/:id' element={<Detail />} />
           <Route path='/create' element={<Create />} />
         </Routes>
-      </div>
+      </>
     </Router>
   );
 };

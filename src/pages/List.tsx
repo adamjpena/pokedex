@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getPokemonList } from '../services/pokemonList';
 import PokemonList from '../components/PokemonList';
+import Pagination from '../components/Pagination';
 import { getPageData } from '../helpers';
 
 import { PokemonDetailShape, PropShape } from '../global/types';
@@ -53,14 +54,12 @@ const List = () => {
     <main data-testid='list-page'>
       {count > 0 && isValidPage && hasResults && (
         <>
+          <h1>Pokedex</h1>
           <PokemonList pokemonListData={results} />
-          <div>
-            {parsedPage > 1 && (
-              <Link to={`/list/${parsedPage - 1}`}>Previous</Link>
-            )}
-            &nbsp;
-            {hasNext && <Link to={`/list/${parsedPage + 1}`}>Next</Link>}
-          </div>
+          <Pagination
+            previous={parsedPage > 1 ? `/list/${parsedPage - 1}` : undefined}
+            next={hasNext ? `/list/${parsedPage + 1}` : undefined}
+          />
         </>
       )}
       {count > 0 && results.length === 0 && (

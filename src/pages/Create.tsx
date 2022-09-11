@@ -7,6 +7,8 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getPokemonAbilityList } from '../services/pokemonAbilityList';
 import { getPokemonTypeList } from '../services/pokemonTypeList';
 
+import styles from './Create.module.scss';
+
 const Create = () => {
   const navigate = useNavigate();
   const [createdPokemon, setCreatedPokemon] = useLocalStorage<
@@ -179,6 +181,7 @@ const Create = () => {
         onSubmit={handleSubmit((data) => {
           createPokemon(data);
         })}
+        className={styles.form}
       >
         <Input
           {...register('name', { required: 'Name field is required' })}

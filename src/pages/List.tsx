@@ -51,7 +51,7 @@ const List = () => {
 
   return (
     <main data-testid='list-page'>
-      {isValidPage && hasResults && (
+      {count > 0 && isValidPage && hasResults && (
         <>
           <PokemonList pokemonListData={results} />
           <div>
@@ -61,6 +61,11 @@ const List = () => {
             &nbsp;
             {hasNext && <Link to={`/list/${parsedPage + 1}`}>Next</Link>}
           </div>
+        </>
+      )}
+      {count > 0 && results.length === 0 && (
+        <>
+          You've reached an invalid page. <Link to='/'>Return home?</Link>
         </>
       )}
       {!isValidPage && (

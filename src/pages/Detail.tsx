@@ -15,6 +15,7 @@ const Detail = () => {
     PokemonDetailShape[]
   >('createdPokemon', []);
   const [isErrorRequest, setIsErrorRequest] = useState(false);
+  const [isPokemonFetched, setIsPokemonFetched] = useState(false);
   const { id } = useParams<{ id?: string }>();
   const isCreated = id?.split('-')[0] === 'created';
   const parsedId = id && parseInt(id);
@@ -35,6 +36,7 @@ const Detail = () => {
     getPokemonDetail({ id: parsedId })
       .then((response: PokemonDetailShape) => {
         setIsErrorRequest(false);
+        setIsPokemonFetched(true);
         setPokemonDetailData(response);
       })
       .catch((error) => {
@@ -57,7 +59,7 @@ const Detail = () => {
   return (
     <main>
       {pokemonDetailData && <PokemonDetail {...pokemonDetailData} />}
-      {!pokemonDetailData && (
+      {isPokemonFetched && !pokemonDetailData && (
         <>
           {id} is an invalid pokemon id. <Link to='/'>Return home?</Link>
         </>

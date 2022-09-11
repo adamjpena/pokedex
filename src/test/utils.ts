@@ -41,8 +41,8 @@ export const mockPokemonDetailData = () => {
         slot: 3,
       },
     ],
-    height: chance.integer(),
-    id: `${chance.integer().toString()}`,
+    height: chance.natural(),
+    id: `${chance.natural().toString()}`,
     name: chance.word(),
     sprites: {
       front_default: 'https://via.placeholder.com/50x50',
@@ -54,42 +54,42 @@ export const mockPokemonDetailData = () => {
     },
     stats: [
       {
-        base_stat: chance.integer(),
+        base_stat: chance.natural(),
         stat: {
           name: 'hp',
           url: 'https://pokeapi.co/api/v2/stat/1/',
         },
       },
       {
-        base_stat: chance.integer(),
+        base_stat: chance.natural(),
         stat: {
           name: 'attack',
           url: 'https://pokeapi.co/api/v2/stat/2/',
         },
       },
       {
-        base_stat: chance.integer(),
+        base_stat: chance.natural(),
         stat: {
           name: 'defense',
           url: 'https://pokeapi.co/api/v2/stat/3/',
         },
       },
       {
-        base_stat: chance.integer(),
+        base_stat: chance.natural(),
         stat: {
           name: 'special-attack',
           url: 'https://pokeapi.co/api/v2/stat/4/',
         },
       },
       {
-        base_stat: chance.integer(),
+        base_stat: chance.natural(),
         stat: {
           name: 'special-defense',
           url: 'https://pokeapi.co/api/v2/stat/5/',
         },
       },
       {
-        base_stat: chance.integer(),
+        base_stat: chance.natural(),
         stat: {
           name: 'speed',
           url: 'https://pokeapi.co/api/v2/stat/6/',
@@ -106,19 +106,25 @@ export const mockPokemonDetailData = () => {
         type: mockProp(),
       },
     ],
-    weight: chance.integer(),
+    weight: chance.natural(),
   };
 };
 
-export const mockPokemonListItem = (i = chance.integer()) => {
+export const mockPokemonListItem = () => {
   return {
     name: chance.word(),
-    url: `https://pokeapi.co/api/v2/pokemon/${i}/`,
+    url: `https://pokeapi.co/api/v2/pokemon/${chance.natural()}/`,
   }
 }
 
-export const mockPokemonListData = () => {
-  return Array(20).fill({}).map((x, i) => {
-    return mockPokemonListItem(i);
+export const mockPokemonListData = (length = 20) => {
+  return Array(length).fill({}).map(() => {
+    return mockPokemonListItem();
+  });
+}
+
+export const mockCreatedPokemonListData = (length = 20) => {
+  return Array(length).fill({}).map(() => {
+    return mockPokemonDetailData();
   });
 }

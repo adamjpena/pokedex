@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getPokemonList } from '../services/pokemonList';
 import PokemonList from '../components/PokemonList';
+import { getPageData } from '../helpers';
 
 import { PokemonDetailShape, PropShape } from '../global/types';
 
@@ -17,51 +18,6 @@ const List = () => {
   const [pokemonNext, setPokemonNext] = useState('');
   const parsedPage = parseInt(page);
   const isValidPage = !isNaN(parsedPage);
-
-  const getPageData = ({
-    count,
-    createdPokemon = [],
-    pokemonListData = [],
-    limit = 20,
-    pokemonNext,
-    page,
-  }: {
-    count: number;
-    createdPokemon: PokemonDetailShape[];
-    pokemonListData: PropShape[];
-    limit?: number;
-    pokemonNext: string;
-    page: number;
-  }) => {
-    const { length: createdPokemonCount = 0 } = createdPokemon;
-    const { length: pokemonListDataCount = 0 } = pokemonListData;
-
-    if (createdPokemonCount === 0 || pokemonListDataCount === limit) {
-      return { results: pokemonListData, hasNext: pokemonNext };
-    }
-
-    const pageStartCount = (page - 1) * limit;
-    const createdPokemonOffset =
-      pokemonListDataCount > 0 ? 0 : pageStartCount - count;
-    const sliceCount = limit - pokemonListDataCount;
-
-    const results = [
-      ...pokemonListData,
-      ...createdPokemon
-        .slice(createdPokemonOffset, sliceCount)
-        .map(({ name, id }) => {
-          return {
-            name,
-            url: `${id}/`,
-          };
-        }),
-    ];
-    return {
-      results,
-      hasNext:
-        pokemonNext || createdPokemonOffset + sliceCount < createdPokemonCount,
-    };
-  };
 
   useEffect(() => {
     if (!isValidPage) {

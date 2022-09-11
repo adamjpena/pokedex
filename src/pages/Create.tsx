@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import { Input, Select } from '../components/Form';
 import { PokemonDetailShape, PropShape } from '../global/types';
@@ -7,6 +8,7 @@ import { getPokemonAbilityList } from '../services/pokemonAbilityList';
 import { getPokemonTypeList } from '../services/pokemonTypeList';
 
 const Create = () => {
+  const navigate = useNavigate();
   const [createdPokemon, setCreatedPokemon] = useLocalStorage<
     PokemonDetailShape[]
   >('createdPokemon', []);
@@ -49,11 +51,17 @@ const Create = () => {
           slot: i + normalAbilities.length + 1,
         };
       });
+
+    // increment on last created pokemon id to prevent overlap
+    const lastId = createdPokemon.at(-1)?.id || 'created-0';
+    const lastIdNumber = parseInt(lastId.split('-').pop() || '0');
+    const id = `created-${lastIdNumber + 1}`;
+
     const newPokemon = {
       abilities: [...normalAbilities, ...hiddenAbilities],
       height: parseInt(height),
       // TODO generate this based on current number of created pokemon
-      id: `custom-${createdPokemon.length}`,
+      id,
       name,
       sprites: {
         front_default: imgUrl,
@@ -124,6 +132,7 @@ const Create = () => {
     } else {
       setCreatedPokemon([...createdPokemon, newPokemon]);
     }
+    navigate(`/detail/${id}`);
   };
 
   useEffect(() => {

@@ -28,8 +28,8 @@ const PokemonDetail = ({
             <td>Types:</td>
             <td>
               <ul>
-                {types.map(({ type }) => (
-                  <li key={type.name}>{type.name}</li>
+                {types.map(({ type, slot }) => (
+                  <li key={slot}>{type.name}</li>
                 ))}
               </ul>
             </td>
@@ -39,7 +39,7 @@ const PokemonDetail = ({
             <td>
               <ul>
                 {abilities.map(({ ability, slot }) => (
-                  <li key={ability.name}>{ability.name}</li>
+                  <li key={slot}>{ability.name}</li>
                 ))}
               </ul>
             </td>

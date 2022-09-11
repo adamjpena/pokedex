@@ -29,7 +29,7 @@ export interface PokemonDetailShape {
     slot: number;
   }[];
   height: number;
-  id: number | string;
+  id: string;
   name: string;
   sprites: SpriteAll;
   stats: {

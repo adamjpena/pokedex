@@ -9,7 +9,9 @@ const PokemonListing = ({ name, url }: PropShape) => {
 
   return (
     <li className={styles.pokemonList}>
-      <Link to={`/detail/${pokemonId}`}>{name}</Link>
+      <Link to={`/detail/${pokemonId}`}>
+        {pokemonId}: {name}
+      </Link>
     </li>
   );
 };

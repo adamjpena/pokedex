@@ -6,14 +6,10 @@ import styles from './Pagination.module.scss';
 const Pagination = ({
   currentPage,
   pageTotal,
-  previous,
-  next,
   relativePath = '',
 }: {
   currentPage: number;
   pageTotal: number;
-  previous?: string;
-  next?: string;
   relativePath?: string;
 }) => {
   const pageStart = currentPage < 7 ? 1 : currentPage - 5;

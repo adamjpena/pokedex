@@ -19,28 +19,24 @@ export const convertDetailedListToOverviewList = ({
   });
 }
 
-export const getPageData = ({
+export const getPokemonResults = ({
   count,
   createdPokemon = [],
   pokemonListData = [],
   limit = 20,
-  pokemonNext,
   page,
 }: {
   count: number;
   createdPokemon: PokemonDetailShape[];
   pokemonListData: PropShape[];
   limit?: number;
-  pokemonNext?: string;
   page: number;
 }) => {
   const { length: createdPokemonCount = 0 } = createdPokemon;
   const { length: pokemonListDataCount = 0 } = pokemonListData;
 
-  const hasNext = pokemonNext !== '' && pokemonNext != null;
-
   if (createdPokemonCount === 0 || pokemonListDataCount === limit) {
-    return { results: pokemonListData, hasNext };
+    return pokemonListData;
   }
 
   const pageStartCount = (page - 1) * limit;
@@ -56,11 +52,7 @@ export const getPageData = ({
       sliceCount,
     })
   ];
-  return {
-    results,
-    hasNext:
-      hasNext || createdPokemonOffset + sliceCount < createdPokemonCount,
-  };
+  return results;
 };
 
 export const toTitleCase = (str: string) => {
@@ -68,3 +60,7 @@ export const toTitleCase = (str: string) => {
     return (word.charAt(0).toUpperCase() + word.slice(1));
   }).join(' ');
 }
+
+export const roundUpNearestN = (num: number, n: number) => {
+  return Math.ceil(num / n) * n;
+};

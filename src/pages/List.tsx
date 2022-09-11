@@ -4,7 +4,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getPokemonList } from '../services/pokemonList';
 import PokemonList from '../components/PokemonList';
 import Pagination from '../components/Pagination';
-import { getPageData } from '../helpers';
+import { getPokemonResults, roundUpNearestN } from '../helpers';
 
 import { PokemonDetailShape, PropShape } from '../global/types';
 
@@ -16,7 +16,6 @@ const List = () => {
     [],
   );
   const [count, setCount] = useState(0);
-  const [pokemonNext, setPokemonNext] = useState('');
   const parsedPage = parseInt(page);
   const isValidPage = !isNaN(parsedPage);
 
@@ -36,23 +35,17 @@ const List = () => {
       }) => {
         setPokemonListData(results);
         setCount(count);
-        setPokemonNext(next);
       },
     );
   }, [isValidPage, page, parsedPage]);
-  const { results, hasNext } = getPageData({
+  const results = getPokemonResults({
     count,
     createdPokemon,
     pokemonListData,
-    pokemonNext,
     page: parsedPage,
   });
 
   const hasResults = results.length > 0;
-
-  const roundUpNearestN = (num: number, n: number) => {
-    return Math.ceil(num / n) * n;
-  };
 
   const pageTotal = roundUpNearestN(count + createdPokemon.length, 20) / 20;
 

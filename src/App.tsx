@@ -1,13 +1,14 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
 import List from './pages/List';
 import Detail from './pages/Detail';
 import Create from './pages/Create';
-import Header from './components/Header';
+import FourZeroFour from './pages/404';
 
 const App = () => {
   return (
-    <Router>
+    <Router basename='/'>
       <>
         <Header />
         <Routes>
@@ -16,6 +17,7 @@ const App = () => {
           <Route path='/list/:page' element={<List />} />
           <Route path='/detail/:id' element={<Detail />} />
           <Route path='/create' element={<Create />} />
+          <Route path='*' element={<FourZeroFour />} />
         </Routes>
       </>
     </Router>

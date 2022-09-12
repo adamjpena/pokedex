@@ -1,6 +1,6 @@
 # Pokedex clone
 
-To preview this app, please visit this link: https://adamjpena.github.io/pokedex/
+To preview this app, please visit this link: https://adamjpena.github.io/pokedex/#/
 
 A pokedex, created by Professor Oak, is a device that serves as compendium of all pokemon. This app is a clone of the pokedex which consumes the [Pokeapi](https://pokeapi.co/) to make a [paginated list of pokemons](https://adamjpena.github.io/pokedex/#/), with [detail pages](https://adamjpena.github.io/pokedex/#/detail/28) and an ["Create pokemon" feature](https://adamjpena.github.io/pokedex/#/create).
 
